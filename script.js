@@ -1,10 +1,3 @@
-/**
- * TODO: Change sortMoviesByRank() function to sort movies list by rank
- * TODO: Sort movies by id, rank, and title through dynamic function
- * TODO: Create helper function called getMaxMovieObject() for finding max movie
- */
-
-// List of movies
 let movies = [
     {
         title: "Fight Club",
@@ -57,12 +50,8 @@ let movies = [
         id: "tt0050083"
     }
 ]
-
-window.onload = function() {
-
-    // Display Movies list
-    displayMovies(movies);
-}
+let current = '';
+let previous = '';
 
 /**
  * Display list of movies in a table
@@ -83,57 +72,125 @@ function displayMovies(movies){
     document.getElementById("movies-list").innerHTML = table;
 }
 
+const ID = document.getElementById("ID");
+ID.addEventListener('click', function(){
+    if (previous == '') {
+        var sorted_arr = movies.sort((a, b) => (a.id > b.id ? -1 : 1));
+    } else if (previous == 'asc') {
+        var sorted_arr = movies.sort((a, b) => (a.id > b.id ? 1 : -1));
+    } else if (previous == "desc") {
+        var sorted_arr = movies.sort((a, b) => (a.id > b.id ? -1 : 1));
+    }
+    let table = "<table border='1' style='width: 100%'>";
+    table += "<tr><th>ID</th><th>Name</th><th>Rank</th></tr>";
+    for(let index=0; index<sorted_arr.length; index++){
+        table += "<tr>";
+        table += "<td>" + sorted_arr[index].id + "</td>";
+        table += "<td>" + sorted_arr[index].title + "</td>";
+        table += "<td>" + sorted_arr[index].rank + "</td>";
+        table += "</tr>"
+    }
+    // Close the table
+    table += "</table>";
+    document.getElementById("movies-list").innerHTML = table;
+    console.log(sorted_arr)
+    current = 'id'
+})
 
-/**
- * Sort movies by rank from greatest to smallest 
- * HINT: make sure you are comparing the right value in in if(...)
- * HINT: replace numbers with movies .
- */
-function sortMoviesByRank(numbers){
-  // Code from previous sortBestRatingsFirst() function
-  for (let j = 0; j < numbers.length - 1; j++) {
+const title = document.getElementById("Name");
+title.addEventListener('click', function(){
+    if (previous == '') {
+        var sorted_arr = movies.sort((a, b) => (a.title > b.title ? -1 : 1));
+    } else if (previous == 'asc') {
+        var sorted_arr = movies.sort((a, b) => (a.title > b.title ? 1 : -1));
+    } else if (previous == "desc") {
+        var sorted_arr = movies.sort((a, b) => (a.title > b.title ? -1 : 1));
+    }
+    let table = "<table border='1' style='width: 100%'>";
+    table += "<tr><th>ID</th><th>Name</th><th>Rank</th></tr>";
+    for(let index=0; index<sorted_arr.length; index++){
+        table += "<tr>";
+        table += "<td>" + sorted_arr[index].id + "</td>";
+        table += "<td>" + sorted_arr[index].title + "</td>";
+        table += "<td>" + sorted_arr[index].rank + "</td>";
+        table += "</tr>"
+    }
+    // Close the table
+    table += "</table>";
+    document.getElementById("movies-list").innerHTML = table;
+    current = 'name'
+})
 
-      let max_num = numbers[j];
-      let max_location = j;
+const rank = document.getElementById("Rank");
+rank.addEventListener('click', function(){
+    if (previous == '') {
+        var sorted_arr = movies.sort((a, b) => (a.rank > b.rank ? -1 : 1));
+    } else if (previous == 'asc') {
+        var sorted_arr = movies.sort((a, b) => (a.rank > b.rank ? 1 : -1));
+    } else if (previous == "desc") {
+        var sorted_arr = movies.sort((a, b) => (a.rank > b.rank ? -1 : 1));
+    }
+    let table = "<table border='1' style='width: 100%'>";
+    table += "<tr><th>ID</th><th>Name</th><th>Rank</th></tr>";
+    for(let index=0; index<sorted_arr.length; index++){
+        table += "<tr>";
+        table += "<td>" + sorted_arr[index].id + "</td>";
+        table += "<td>" + sorted_arr[index].title + "</td>";
+        table += "<td>" + sorted_arr[index].rank + "</td>";
+        table += "</tr>"
+    }
+    // Close the table
+    table += "</table>";
+    document.getElementById("movies-list").innerHTML = table;
+    current = 'rank'
+})
 
-      for (let i = j; i < numbers.length; i++) {
-          if (numbers[i] > max_num) {
-              // Know max AND it's index (location)
-              max_num = numbers[i]
-              max_location = i
-          }
-      }
-      // swap the first and the last
-      numbers[max_location] = numbers[j] // --> 10
-      numbers[j] = max_num
-  }
+const asc = document.getElementById("Ascending");
+asc.addEventListener('click', function(){
+    if (current == "id") {
+        var sorted_arr = movies.sort((a, b) => (a.id > b.id ? 1 : -1));
+    } else if (current == 'name') {
+        var sorted_arr = movies.sort((a, b) => (a.title > b.title ? 1 : -1));
+    } else if (current == 'rank') {
+        var sorted_arr = movies.sort((a, b) => (a.rank > b.rank ? 1 : -1));
+    };
+    
+    let table = "<table border='1' style='width: 100%'>";
+    table += "<tr><th>ID</th><th>Name</th><th>Rank</th></tr>";
+    for(let index=0; index<sorted_arr.length; index++){
+        table += "<tr>";
+        table += "<td>" + sorted_arr[index].id + "</td>";
+        table += "<td>" + sorted_arr[index].title + "</td>";
+        table += "<td>" + sorted_arr[index].rank + "</td>";
+        table += "</tr>"
+    }
+    // Close the table
+    table += "</table>";
+    document.getElementById("movies-list").innerHTML = table;
+    previous = 'asc'
+})
 
-  return numbers
-}
-
-/**
- * Sort movies by an attribute
- * @param sortAttr pass in 'id', 'title', or 'rank' to sort by
- */
-function sortMoviesByAttr(movies, sortAttr){
-  // CODE GOES HERE
-}
-
-
-/**
- * Retrieve the max movie object based on attribute
- * HINT: make sure you are comparing the right attribute
- */
-function getMaxMovieObject(movies, start, sortAttr){
-  // Code from previous findMaxHelper() function
-  let maximum = numbers[start];
-  let max_location = start
-
-  for (let i = start; i < numbers.length; i++) {
-      if (numbers[i] > maximum) {
-          maximum = numbers[i]
-          max_location = i
-      }
-  }
-  return {max_number: maximum, max_index: max_location}
-}
+const desc = document.getElementById("Descending");
+desc.addEventListener('click', function(){
+    if (current == "id") {
+        var sorted_arr = movies.sort((a, b) => (a.id > b.id ? -1 : 1));
+    } else if (current == 'name') {
+        var sorted_arr = movies.sort((a, b) => (a.title > b.title ? -1 : 1));
+    } else if (current == 'rank') {
+        var sorted_arr = movies.sort((a, b) => (a.rank > b.rank ? -1 : 1));
+    };
+    
+    let table = "<table border='1' style='width: 100%'>";
+    table += "<tr><th>ID</th><th>Name</th><th>Rank</th></tr>";
+    for(let index=0; index<sorted_arr.length; index++){
+        table += "<tr>";
+        table += "<td>" + sorted_arr[index].id + "</td>";
+        table += "<td>" + sorted_arr[index].title + "</td>";
+        table += "<td>" + sorted_arr[index].rank + "</td>";
+        table += "</tr>"
+    }
+    // Close the table
+    table += "</table>";
+    document.getElementById("movies-list").innerHTML = table;
+    previous = 'desc';
+})
